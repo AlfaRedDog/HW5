@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using MassTransit;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace DataAcess.Controllers
 {
@@ -25,19 +26,28 @@ namespace DataAcess.Controllers
         {
             if(column is null || value is null)
             {
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return new BaseResponse()
                 {
                     Errors = new List<string>() {"column or value is empty "},
                     isSuccess = false
                 };
+
             }
             FindRequest findRequest = new FindRequest() { 
                                                         RequestMode = RequestMode.Find, 
                                                         Column = column, 
                                                         Value = value };
-            var response = await requestClient.GetResponse<FindCustomersResponse>(findRequest);
-
-            return response.Message;
+            try
+            {
+                var response = await requestClient.GetResponse<FindCustomersResponse>(findRequest);
+                return response.Message;
+            }
+            catch(Exception ex)
+            {
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return null;
+            }
         }
 
         [HttpGet("ReadCustomer")]

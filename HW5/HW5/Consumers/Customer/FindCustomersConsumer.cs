@@ -23,10 +23,7 @@ namespace DataAcess.Consumers.Customer
 
         public async Task Consume(ConsumeContext<FindRequest> context)
         {
-            Console.WriteLine("sxdcfvghbjnkmdcfvgbhjnkmcshdnjdkfgkdmvlksld");
-            var a = customersRepository.Read(context.Message.Value, context.Message.Column);
-            var b = mapper.Map(a);
-            await context.RespondAsync<FindCustomersResponse>(b);
+            await context.RespondAsync<FindCustomersResponse>(mapper.Map(customersRepository.Read(context.Message.Value, context.Message.Column)));
         }
     }
 }

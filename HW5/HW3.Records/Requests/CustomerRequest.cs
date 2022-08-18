@@ -6,5 +6,9 @@ namespace HW3.Models.Requests
     {
         [JsonIgnore]
         public RequestMode RequestMode;
+
+        public string ValueToUpdate { get; set; }
+
+        public string ColumnToUpdate { get; set; }
     }
 }
