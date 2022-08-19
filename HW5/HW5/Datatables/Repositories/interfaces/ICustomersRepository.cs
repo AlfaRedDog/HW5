@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAcess.Datatables.Repositories.interfaces
 {
-    public interface ICustomerRepository
+    public interface ICustomersRepository
     {
         public void Add(DBCustomers customer);
 

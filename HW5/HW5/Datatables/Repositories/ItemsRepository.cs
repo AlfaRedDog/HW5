@@ -1,18 +1,20 @@
 ﻿using DataAcess.Datatables;
+using DataAcess.Datatables.Repositories.interfaces;
 using HW3.Models.DBTables;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace DataAcess.Datatables.Repositories
 {
-    public class ItemsRepository
+    public class ItemsRepository : IItemsRepository
     {
-        private readonly DBShopContext _context;
+        private readonly IDBShopContext _context;
 
-        public ItemsRepository()
+        public ItemsRepository([FromServices] IDBShopContext context)
         {
-            _context = new DBShopContext(new Microsoft.EntityFrameworkCore.DbContextOptions<DBShopContext>());
+            _context = context;
         }
 
          public void Add(DBItems item)
@@ -39,7 +41,7 @@ namespace DataAcess.Datatables.Repositories
                 case "Amount": result.Amount = Int32.Parse(value); break;
                 case "Price": result.Price = Int32.Parse(value); break;
                 case "Expiration_date": result.Expiration_date = DateTime.Parse(value); break;
-                //default: MenuOutput.ColorWriteLine(ConsoleColor.Red, "Wrong name of column, enter again"); return;
+                default: return;
             }
 
             _context.SaveChanges();
@@ -56,7 +58,7 @@ namespace DataAcess.Datatables.Repositories
                 case "Amount": result = _context.Items.Where(x => x.Amount == Int32.Parse(value)).ToList(); break;
                 case "Price": result = _context.Items.Where(x => x.Price == Int32.Parse(value)).ToList(); break;
                 case "Expiration_date": result = _context.Items.Where(x => x.Expiration_date == DateTime.Parse(value)).ToList(); break;
-                //default: MenuOutput.ColorWriteLine(ConsoleColor.Red, "Wrong name of column, enter again"); break;
+                default: return null;
             }
 
             return result;

@@ -32,19 +32,22 @@ namespace DataAcess.Controllers
                     Errors = new List<string>() {"column or value is empty "},
                     isSuccess = false
                 };
-
             }
             FindRequest findRequest = new FindRequest() { 
                                                         RequestMode = RequestMode.Find, 
                                                         Column = column, 
                                                         Value = value };
+
             try
             {
                 var response = await requestClient.GetResponse<FindCustomersResponse>(findRequest);
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
                 return response.Message;
             }
             catch(Exception ex)
             {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
                 HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return null;
             }
@@ -55,20 +58,19 @@ namespace DataAcess.Controllers
             [FromServices] IRequestClient<CustomerRequest> requestClient,
             [FromBody] CustomerRequest customer)
         {
-            FluentValidation.Results.ValidationResult validationResult = validator.Validate(customer);
-
-            if (!validationResult.IsValid)
+            try
             {
-                return new BaseResponse()
-                {
-                    Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList(),
-                    isSuccess = false
-                };
+                customer.RequestMode = RequestMode.Read;
+                var response = await requestClient.GetResponse<CustomerResponse>(customer);
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
+                return response.Message;
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return null;
             }
-            customer.RequestMode = RequestMode.Read;
-            var response = await requestClient.GetResponse<CustomerResponse>(customer);
-
-            return response.Message;
         }
 
         [HttpPost("CreateCustomer")]
@@ -80,16 +82,27 @@ namespace DataAcess.Controllers
 
             if (!validationResult.IsValid)
             {
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return new BaseResponse()
                 {
                     Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList(),
                     isSuccess = false
                 };
             }
-            customer.RequestMode = RequestMode.Create;
-            var response = await requestClient.GetResponse<CustomerResponse>(customer);
 
-            return response.Message;
+            try
+            {
+                customer.RequestMode = RequestMode.Create;
+                var response = await requestClient.GetResponse<CustomerResponse>(customer);
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.Created;
+                return response.Message;
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return null;
+            }
         }
 
         [HttpPut("UpdateCustomer")]
@@ -101,6 +114,7 @@ namespace DataAcess.Controllers
 
             if (!validationResult.IsValid)
             {
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return new BaseResponse()
                 {
                     Errors = validationResult.Errors.Select(x => x.ErrorMessage).ToList(),
@@ -108,10 +122,20 @@ namespace DataAcess.Controllers
                 };
             }
 
-            customer.RequestMode = RequestMode.Update;
-            var response = await requestClient.GetResponse<CustomerResponse>(customer);
+            try
+            {
+                customer.RequestMode = RequestMode.Update;
+                var response = await requestClient.GetResponse<CustomerResponse>(customer);
 
-            return response.Message;
+                return response.Message;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return null;
+            }
         }
     }
 }

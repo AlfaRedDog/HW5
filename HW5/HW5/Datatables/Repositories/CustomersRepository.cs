@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DataAcess.Datatables.Repositories
 {
-    public class CustomersRepository : ICustomerRepository
+    public class CustomersRepository : ICustomersRepository
     {
         private readonly IDBShopContext _context;
 
@@ -40,7 +40,7 @@ namespace DataAcess.Datatables.Repositories
                 case "Name": result.Name = value; break;
                 case "Surename": result.Surename = value; break;
                 case "Adress": result.Adress = value; break;
-                //default: MenuOutput.ColorWriteLine(ConsoleColor.Red, "Wrong name of column, enter again"); return;
+                default: return;
             }
 
             _context.SaveChanges();
@@ -55,7 +55,7 @@ namespace DataAcess.Datatables.Repositories
                 case "Name": result = _context.Customers.Where(x => x.Name == value).ToList(); break;
                 case "Surename": result = _context.Customers.Where(x => x.Surename == value).ToList(); break;
                 case "Adress": result = _context.Customers.Where(x => x.Adress == value).ToList(); break;
-                //default: MenuOutput.ColorWriteLine(ConsoleColor.Red, "Wrong name of column, enter again"); break;
+                default: return null;
             }
             return result;
         }

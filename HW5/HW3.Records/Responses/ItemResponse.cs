@@ -1,6 +1,6 @@
-﻿using System;
+﻿using HW3.Models.DBTables;
+using System;
 using System.Collections.Generic;
-using HW3.Models.DBTables;
 
 namespace HW3.Models.Responses
 {

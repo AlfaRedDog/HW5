@@ -3,16 +3,18 @@ using HW3.Models.DBTables;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using DataAcess.Datatables.Repositories.interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DataAcess.Datatables.Repositories
 {
-    public class OrdersRepository
+    public class OrdersRepository : IOrdersRepository
     {
-        private readonly DBShopContext _context;
+        private readonly IDBShopContext _context;
 
-        public OrdersRepository()
+        public OrdersRepository([FromServices] IDBShopContext context)
         {
-            _context = new DBShopContext(new Microsoft.EntityFrameworkCore.DbContextOptions<DBShopContext>());
+            _context = context;
         }
 
         public void Add(DBOrders order)
@@ -38,7 +40,7 @@ namespace DataAcess.Datatables.Repositories
                 case "Id_customer": result.Id_customer = Guid.Parse(value); break;
                 case "Id_item": result.Id_item = Guid.Parse(value); break;
                 case "Amount": result.Amount = Int32.Parse(value); break;
-                //default: MenuOutput.ColorWriteLine(ConsoleColor.Red, "Wrong name of column, enter again"); return;
+                default: return;
             }
 
             _context.SaveChanges();
@@ -53,7 +55,7 @@ namespace DataAcess.Datatables.Repositories
                 case "Id_customer": result = _context.Orders.Where(x => x.Id_customer == Guid.Parse(value)).ToList(); break;
                 case "Id_item": result = _context.Orders.Where(x => x.Id_item == Guid.Parse(value)).ToList(); break;
                 case "Amount": result = _context.Orders.Where(x => x.Amount == Int32.Parse(value)).ToList(); break;
-                //default: MenuOutput.ColorWriteLine(ConsoleColor.Red, "Wrong name of column, enter again"); break;
+                default: return null;
             }
             return result;
         }

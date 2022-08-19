@@ -33,13 +33,18 @@ namespace HW5
 
             services.AddScoped<IDBShopContext, DBShopContext>();
 
-            services.AddTransient<ICustomerRepository, CustomersRepository>();
+            services.AddTransient<ICustomersRepository, CustomersRepository>();
+            services.AddTransient<IItemsRepository, ItemsRepository>();
+            services.AddTransient<IProvidersRepository, ProvidersRepository>();
+            services.AddTransient<IOrdersRepository, OrdersRepository>();
 
             services.AddMassTransit(x =>
             {
                 x.AddConsumer<CRUCustomerConsumer>();
                 x.AddConsumer<FindCustomersConsumer>();
 
+
+                //add others consumers
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.Host("localhost", "/", host =>
@@ -49,6 +54,7 @@ namespace HW5
                     });
                     cfg.ReceiveEndpoint("CRUCustomer", ep => ep.ConfigureConsumer<CRUCustomerConsumer>(context));
                     cfg.ReceiveEndpoint("FindCustomers", ep => ep.ConfigureConsumer<FindCustomersConsumer>(context));
+                    //add other endpoints
                 });
             });
 

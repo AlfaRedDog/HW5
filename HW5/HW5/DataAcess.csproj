@@ -18,4 +18,10 @@
     <ProjectReference Include="..\HW3.Records\HW3.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Consumers\Item\" />
+    <Folder Include="Consumers\Order\" />
+    <Folder Include="Consumers\Provider\" />
+  </ItemGroup>
+
 </Project>

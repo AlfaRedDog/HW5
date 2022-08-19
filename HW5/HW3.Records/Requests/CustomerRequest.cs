@@ -2,7 +2,7 @@
 
 namespace HW3.Models.Requests
 {
-    public class CustomerRequest : DBTables.DBCustomers
+    public class CustomerRequest : DBTables.DBCustomers, IUpdateParams
     {
         [JsonIgnore]
         public RequestMode RequestMode;

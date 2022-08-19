@@ -12,10 +12,10 @@ namespace DataAcess.Consumers.Customer
 {
     public class FindCustomersConsumer : IConsumer<FindRequest>
     {
-        public ICustomerRepository customersRepository { get; set; }
+        public ICustomersRepository customersRepository { get; set; }
         public ListDBCustomersToFindCustomersResponse mapper { get; set; }
         public FindCustomersConsumer(
-            [FromServices] ICustomerRepository customersRepository)
+            [FromServices] ICustomersRepository customersRepository)
         {
             this.customersRepository = customersRepository;
             this.mapper = new();

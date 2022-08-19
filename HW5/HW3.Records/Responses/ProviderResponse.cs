@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HW3.Models.Responses
 {
-    class ProviderResponse : IBaseResponse
+    public class ProviderResponse : IBaseResponse
     {
         public ProviderResponse(DBProviders provider)
         {
