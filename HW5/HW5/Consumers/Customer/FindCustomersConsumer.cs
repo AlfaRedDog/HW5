@@ -3,10 +3,10 @@ using HW3.Models.Requests;
 using HW3.Models.Responses;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
-using DataAcess.Mappers;
 using System.Threading.Tasks;
 using System;
 using DataAcess.Datatables.Repositories.interfaces;
+using DataAcess.Mappers.Customer;
 
 namespace DataAcess.Consumers.Customer
 {

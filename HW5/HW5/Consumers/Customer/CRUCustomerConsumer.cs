@@ -1,5 +1,5 @@
 ﻿using DataAcess.Datatables.Repositories.interfaces;
-using DataAcess.Mappers;
+using DataAcess.Mappers.Customer;
 using HW3.Models.DBTables;
 using HW3.Models.Requests;
 using HW3.Models.Responses;

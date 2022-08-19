@@ -6,6 +6,10 @@ namespace HW3.Models.Responses
 {
     public class ItemResponse : IBaseResponse
     {
+        public ItemResponse()
+        {
+        }
+
         public ItemResponse(DBItems items)
         {
             Amount = items.Amount;

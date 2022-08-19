@@ -35,6 +35,8 @@ namespace Client
 
                 x.AddRequestClient<CustomerRequest>(new Uri("rabbitmq://localhost/CRUCustomer"));
                 x.AddRequestClient<FindRequest>(new Uri("rabbitmq://localhost/FindCustomers"));
+                x.AddRequestClient<ItemRequest>(new Uri("rabbitmq://localhost/CRUItem"));
+                x.AddRequestClient<FindRequest>(new Uri("rabbitmq://localhost/FindItems"));
             });
 
             services.AddMassTransitHostedService();

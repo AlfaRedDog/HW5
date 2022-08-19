@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using DataAcess.Consumers.Customer;
 using DataAcess.Datatables.Repositories.interfaces;
 using DataAcess.Datatables.Repositories;
+using DataAcess.Consumers.Item;
 
 namespace HW5
 {
@@ -42,7 +43,8 @@ namespace HW5
             {
                 x.AddConsumer<CRUCustomerConsumer>();
                 x.AddConsumer<FindCustomersConsumer>();
-
+                x.AddConsumer<CRUItemConsumer>();
+                x.AddConsumer<FindItemsConsumer>();
 
                 //add others consumers
                 x.UsingRabbitMq((context, cfg) =>
@@ -52,8 +54,11 @@ namespace HW5
                         host.Username("guest");
                         host.Password("guest");
                     });
+
                     cfg.ReceiveEndpoint("CRUCustomer", ep => ep.ConfigureConsumer<CRUCustomerConsumer>(context));
                     cfg.ReceiveEndpoint("FindCustomers", ep => ep.ConfigureConsumer<FindCustomersConsumer>(context));
+                    cfg.ReceiveEndpoint("FindItems", ep => ep.ConfigureConsumer<FindItemsConsumer>(context));
+                    cfg.ReceiveEndpoint("CRUItem", ep => ep.ConfigureConsumer<CRUItemConsumer>(context));
                     //add other endpoints
                 });
             });
