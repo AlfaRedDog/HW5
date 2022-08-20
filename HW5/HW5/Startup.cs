@@ -9,6 +9,7 @@ using DataAcess.Consumers.Customer;
 using DataAcess.Datatables.Repositories.interfaces;
 using DataAcess.Datatables.Repositories;
 using DataAcess.Consumers.Item;
+using DataAcess.Consumers;
 
 namespace HW5
 {
@@ -42,9 +43,8 @@ namespace HW5
             services.AddMassTransit(x =>
             {
                 x.AddConsumer<CRUCustomerConsumer>();
-                x.AddConsumer<FindCustomersConsumer>();
                 x.AddConsumer<CRUItemConsumer>();
-                x.AddConsumer<FindItemsConsumer>();
+                x.AddConsumer<FindConsumer>();
 
                 //add others consumers
                 x.UsingRabbitMq((context, cfg) =>
@@ -56,8 +56,7 @@ namespace HW5
                     });
 
                     cfg.ReceiveEndpoint("CRUCustomer", ep => ep.ConfigureConsumer<CRUCustomerConsumer>(context));
-                    cfg.ReceiveEndpoint("FindCustomers", ep => ep.ConfigureConsumer<FindCustomersConsumer>(context));
-                    cfg.ReceiveEndpoint("FindItems", ep => ep.ConfigureConsumer<FindItemsConsumer>(context));
+                    cfg.ReceiveEndpoint("FindRows", ep => ep.ConfigureConsumer<FindConsumer>(context));
                     cfg.ReceiveEndpoint("CRUItem", ep => ep.ConfigureConsumer<CRUItemConsumer>(context));
                     //add other endpoints
                 });

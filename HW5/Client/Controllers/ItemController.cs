@@ -35,7 +35,7 @@ namespace DataAcess.Controllers
             }
             FindRequest findRequest = new FindRequest()
             {
-                RequestMode = RequestMode.Find,
+                TableName = TablesEnum.Items,
                 Column = column,
                 Value = value
             };
@@ -81,7 +81,7 @@ namespace DataAcess.Controllers
             [FromServices] IRequestClient<ItemRequest> requestClient,
             [FromBody] ItemRequest item)
         {
-            FluentValidation.Results.ValidationResult validationResult = validator.Validate(item);
+            FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(item);
 
             if (!validationResult.IsValid)
             {
@@ -114,7 +114,7 @@ namespace DataAcess.Controllers
             [FromServices] IRequestClient<ItemRequest> requestClient,
             [FromBody] ItemRequest item)
         {
-            FluentValidation.Results.ValidationResult validationResult = validator.Validate(item);
+            FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(item);
 
             if (!validationResult.IsValid)
             {

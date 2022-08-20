@@ -34,7 +34,7 @@ namespace DataAcess.Controllers
                 };
             }
             FindRequest findRequest = new FindRequest() { 
-                                                        RequestMode = RequestMode.Find, 
+                                                        TableName = TablesEnum.Customers, 
                                                         Column = column, 
                                                         Value = value };
 
@@ -78,7 +78,7 @@ namespace DataAcess.Controllers
             [FromServices] IRequestClient<CustomerRequest> requestClient,
             [FromBody] CustomerRequest customer)
         {
-            FluentValidation.Results.ValidationResult validationResult = validator.Validate(customer);
+            FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(customer);
 
             if (!validationResult.IsValid)
             {
@@ -110,7 +110,7 @@ namespace DataAcess.Controllers
             [FromServices] IRequestClient<CustomerRequest> requestClient,
             [FromBody] CustomerRequest customer)
         {
-            FluentValidation.Results.ValidationResult validationResult = validator.Validate(customer);
+            FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(customer);
 
             if (!validationResult.IsValid)
             {

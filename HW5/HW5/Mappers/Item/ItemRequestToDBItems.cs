@@ -12,6 +12,7 @@ namespace DataAcess.Mappers.Item
             DBItems result = new()
             {
                 Id = request.Id,
+                Id_provider = request.Id_provider,
                 Amount = request.Amount,
                 Price = request.Price,
                 Expiration_date = request.Expiration_date,

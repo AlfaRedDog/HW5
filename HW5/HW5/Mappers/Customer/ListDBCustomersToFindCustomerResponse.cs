@@ -9,7 +9,7 @@ namespace DataAcess.Mappers.Customer
         public FindCustomersResponse Map(List<DBCustomers> context)
         {
             if (context == null)
-                return null;
+                return new FindCustomersResponse();
             FindCustomersResponse findCustomersResponse = new FindCustomersResponse() { customerResponses = new List<CustomerResponse>(), Errors = new List<string>(), isSuccess = true };
             DBCustomerToCustomerResponse mapper = new();
 

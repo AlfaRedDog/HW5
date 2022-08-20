@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace HW3.Models.Requests
 {
     public class FindRequest
-    {
+    { 
         [JsonIgnore]
-        public RequestMode RequestMode { get; set; }
+        public TablesEnum TableName { get; set; }
 
         public string Column { get; set; }
 
